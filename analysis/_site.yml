@@ -1,7 +1,7 @@
 name: "project"
 output_dir: "../docs"
 navbar:
-  title: "Project Title"
+  title: "Project Bowling"
   left:
     - text: "Home"
       href: index.html
@@ -23,10 +23,10 @@ navbar:
         href: article.pdf
   right:
     - icon: fa-github fa-lg
-      href: https://github.com # add directory to GitHub repository
+      href: https://github.com/bowlag18/project_bowling # add directory to GitHub repository
 output:
   bookdown::html_document2:
-    theme: flatly
+    theme: journal
     number_sections: no
     toc: true
     toc_depth: 3
