@@ -1,6 +1,6 @@
 # README
 
-## Project Title
+## My Project 
 
 Describe the project in general terms including the purpose of the project, data sources (with citation, if necessary), analysis methods, and main finding(s). 
 
@@ -26,7 +26,7 @@ Provide relevant information to help clarify how to reproduce the research with 
 
 Example: 
 
-- Download or fork and clone this project from [GitHub](url-to-your-repository) to your local machine. 
+- Download or fork and clone this project from [GitHub](https://github.com/bowlag18/project_bowling) to your local machine.
 - Open an R console (R > 4.02), and from the root directory of the project template run:
 
 ```
@@ -35,21 +35,4 @@ source("_pipeline.R")
 
 A browseable website can be accessed by opening the `docs/index.html` file in a browser.
 
--------
-
-# Notes on formatting Markdown documents
-
-This file includes the `.md` extension, so it can take full advantage of the Markdown syntax hooks to create a range of word processing-style formatting such as:
-
-# Headings
-
-## Sub-headings
-
-* Bullets 1
-* Bullets 2
-* Bullets 3
-
-**Bold text**, *italics*, ~~strikethrough~~, etc.
-
-Follow this link for [more on Markdown syntax options](https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf)
 
