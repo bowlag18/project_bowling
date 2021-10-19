@@ -23,7 +23,7 @@ navbar:
         href: article.pdf
   right:
     - icon: fa-github fa-lg
-      href: https://github.com/bowlag18/project_bowling # add directory to GitHub repository
+      href: https://bowlag18.github.io/project_bowling/ # add directory to GitHub repository
 output:
   bookdown::html_document2:
     theme: journal

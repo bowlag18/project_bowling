@@ -7,11 +7,14 @@ biblio-style: apalike
 
 ## Project title
 
-<!-- Add overview of the project here. -->
+Linguistic Appropriation of African American Vernacular
 
 ### Research area and problem
 
+Cultural appropriation has been a hot topic in recent years. One aspect of this is linguistic appropriation where white communities adopt vernacular that is popular in black communities and use it as their own.
+
 ### Research aim and question
+How does pop culture display this linguistic appropriation? How relevant is this appropriation in the top Billboard songs of the last decade? 
 
 ## Reproduce
 
