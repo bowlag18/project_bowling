@@ -19,12 +19,31 @@ biblio-style: apalike
 
 ```{r setup}
 # Script-specific options or packages
+library(robotstxt) # web scraping robots
+library(tidyverse) # data manipulation
+library(readtext) # read files
+library(tidytext) # separate text
+library(rvest) 
 
+
+paths_allowed(paths = "https://www.last.fm/") # check permissions
+#> [1] TRUE
+source("../functions/acquire_data_functions.R")
 ```
 
 ## Run
 
 <!-- Steps involved in acquiring and organizing the original data -->
+
+```{r get-lyrics}
+download_lastfm_lyrics(last_fm_genre = "rock", target_file = "../data/original/lastfm/rock_lyrics.csv")
+
+
+download_lastfm_lyrics(last_fm_genre = "hip-hop", target_file = "../data/original/lastfm/hip-hop_lyrics.csv")
+```
+
+
+
 
 ## Finalize
 
