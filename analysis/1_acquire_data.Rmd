@@ -11,6 +11,8 @@ biblio-style: apalike
 
 <!-- The aim of this script -->
 
+JF: make sure to add prose description to document your processing steps and their results!
+
 ### Usage
 
 <!-- How to run this script: what input it requires and output produced -->
@@ -40,9 +42,13 @@ download_lastfm_lyrics(last_fm_genre = "rock", target_file = "../data/original/l
 
 
 download_lastfm_lyrics(last_fm_genre = "hip-hop", target_file = "../data/original/lastfm/hip-hop_lyrics.csv")
+
+download_lastfm_lyrics(last_fm_genre = "pop", target_file = "../data/original/lastfm/pop_lyrics.csv")
+
+download_lastfm_lyrics(last_fm_genre = "country", target_file = "../data/original/lastfm/country_lyrics.csv")
 ```
 
-
+JF: make sure to document the data that you have acquired and added to the `../data/original/lastfm/` directory.
 
 
 ## Finalize

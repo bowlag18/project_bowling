@@ -11,20 +11,84 @@ biblio-style: apalike
 
 <!-- The aim of this script -->
 
+JF: make sure to add prose description to document your processing steps and their results!
+
 ### Usage
 
 <!-- How to run this script: what input it requires and output produced -->
 
 ## Setup
 
+JF: note you should only load the packages that are necessary to complete the processing steps for this script!
+
 ```{r setup}
 # Script-specific options or packages
+library(robotstxt) # web scraping robots
+library(tidyverse) # data manipulation
+library(readtext) # read files
+library(tidytext) # separate text
+library(rvest) 
+library(dplyr)
 
+
+paths_allowed(paths = "https://www.last.fm/") # check permissions
+#> [1] TRUE
+source("../functions/acquire_data_functions.R")
 ```
 
 ## Run
 
-<!-- Steps involved in curating and organizing the data -->
+```{r glimpse-pop}
+lastfm <- 
+  readtext(file = "../data/original/lastfm/pop_lyrics.csv", # files to match using *.csv
+           text_field = "lyrics") %>% # text column from the datasets
+  as_tibble() %>%  # convert to a tibble
+  select(-doc_id, -lyrics_url) # keep key variables
+
+
+
+lastfm <- 
+  readtext(file = "../data/original/lastfm/hip-hop_lyrics.csv", # files to match using *.csv
+           text_field = "lyrics") %>% # text column from the datasets
+  as_tibble() %>%  # convert to a tibble
+  select(-doc_id, -lyrics_url) # keep key variables
+
+
+lastfm <- 
+  readtext(file = "../data/original/lastfm/rock_lyrics.csv", # files to match using *.csv
+           text_field = "lyrics") %>% # text column from the datasets
+  as_tibble() %>%  # convert to a tibble
+  select(-doc_id, -lyrics_url) # keep key variables
+
+
+lastfm <- 
+  readtext(file = "../data/original/lastfm/country_lyrics.csv", # files to match using *.csv
+           text_field = "lyrics") %>% # text column from the datasets
+  as_tibble() %>%  # convert to a tibble
+  select(-doc_id, -lyrics_url) # keep key variables
+
+glimpse(lastfm)
+
+
+```
+
+```{r}
+lastfm <-
+  read_csv(file = "../data/original/lastfm/pop_lyrics.csv")
+  lastfm %>% # dataset
+  group_by(artist, song, genre, ) %>% # grouping
+     summarise(lyrics = str_flatten(text, collapse = " ")) %>%
+  ungroup() # unset the groupings
+
+
+glimpse(lastfm) # preview
+```
+```{r}
+
+```
+
+JF: you will want to save the results of your curation process in the `../data/derived/` directory.
+JF: you will also want to create the data dictionary for this curated dataset.
 
 ## Finalize
 
