@@ -516,22 +516,36 @@ div.tocify {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">paths_allowed</span>(<span class="at">paths =</span> <span class="st">&quot;https://www.last.fm/&quot;</span>) <span class="co"># check permissions</span></span></code></pre></div>
+<pre><code>## Warning in get(name, envir = env, inherits = FALSE): input string &#39;^(﻿)*(\s)*#&#39; cannot be
+## translated to UTF-8, is it valid in &#39;ANSI_X3.4-1968&#39;?</code></pre>
+<pre><code>## Warning in get(name, envir = env, inherits = FALSE): input string &#39;^(﻿)*( )*([^\
+## [\] ,;&lt;&gt;()@/?=\{\} \\])+( )*:&#39; cannot be translated to UTF-8, is it valid in
+## &#39;ANSI_X3.4-1968&#39;?</code></pre>
+<pre><code>## Warning in get(name, envir = env, inherits = FALSE): input string &#39;^(﻿)*(\s)*$&#39; cannot be
+## translated to UTF-8, is it valid in &#39;ANSI_X3.4-1968&#39;?</code></pre>
+<pre><code>## Warning in get(name, envir = env, inherits = FALSE): input string &#39;^(﻿)*(\s)*#&#39; cannot be
+## translated to UTF-8, is it valid in &#39;ANSI_X3.4-1968&#39;?</code></pre>
+<pre><code>## Warning in get(name, envir = env, inherits = FALSE): input string &#39;^(﻿)*( )*([^\
+## [\] ,;&lt;&gt;()@/?=\{\} \\])+( )*:&#39; cannot be translated to UTF-8, is it valid in
+## &#39;ANSI_X3.4-1968&#39;?</code></pre>
+<pre><code>## Warning in get(name, envir = env, inherits = FALSE): input string &#39;^(﻿)*(\s)*$&#39; cannot be
+## translated to UTF-8, is it valid in &#39;ANSI_X3.4-1968&#39;?</code></pre>
 <pre><code>## 
  www.last.fm</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;../functions/acquire_data_functions.R&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;../functions/acquire_data_functions.R&quot;</span>)</span></code></pre></div>
 </div>
 <div id="run" class="section level2">
 <h2>Run</h2>
 <!-- Steps involved in acquiring and organizing the original data -->
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download_lastfm_lyrics</span>(<span class="at">last_fm_genre =</span> <span class="st">&quot;rock&quot;</span>, <span class="at">target_file =</span> <span class="st">&quot;../data/original/lastfm/rock_lyrics.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download_lastfm_lyrics</span>(<span class="at">last_fm_genre =</span> <span class="st">&quot;rock&quot;</span>, <span class="at">target_file =</span> <span class="st">&quot;../data/original/lastfm/rock_lyrics.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Data already downloaded!</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download_lastfm_lyrics</span>(<span class="at">last_fm_genre =</span> <span class="st">&quot;hip-hop&quot;</span>, <span class="at">target_file =</span> <span class="st">&quot;../data/original/lastfm/hip-hop_lyrics.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download_lastfm_lyrics</span>(<span class="at">last_fm_genre =</span> <span class="st">&quot;hip-hop&quot;</span>, <span class="at">target_file =</span> <span class="st">&quot;../data/original/lastfm/hip-hop_lyrics.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Data already downloaded!</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download_lastfm_lyrics</span>(<span class="at">last_fm_genre =</span> <span class="st">&quot;pop&quot;</span>, <span class="at">target_file =</span> <span class="st">&quot;../data/original/lastfm/pop_lyrics.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download_lastfm_lyrics</span>(<span class="at">last_fm_genre =</span> <span class="st">&quot;pop&quot;</span>, <span class="at">target_file =</span> <span class="st">&quot;../data/original/lastfm/pop_lyrics.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Data already downloaded!</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download_lastfm_lyrics</span>(<span class="at">last_fm_genre =</span> <span class="st">&quot;country&quot;</span>, <span class="at">target_file =</span> <span class="st">&quot;../data/original/lastfm/country_lyrics.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download_lastfm_lyrics</span>(<span class="at">last_fm_genre =</span> <span class="st">&quot;country&quot;</span>, <span class="at">target_file =</span> <span class="st">&quot;../data/original/lastfm/country_lyrics.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Data already downloaded!</code></pre>
 <p>JF: make sure to document the data that you have acquired and added to the <code>../data/original/lastfm/</code> directory.</p>
 </div>
