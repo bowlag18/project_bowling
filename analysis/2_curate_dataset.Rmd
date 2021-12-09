@@ -40,29 +40,7 @@ source("../functions/acquire_data_functions.R")
 
 ```{r glimpse-pop}
 lastfm <- 
-  readtext(file = "../data/original/lastfm/pop_lyrics.csv", # files to match using *.csv
-           text_field = "lyrics") %>% # text column from the datasets
-  as_tibble() %>%  # convert to a tibble
-  select(-doc_id, -lyrics_url) # keep key variables
-
-
-
-lastfm <- 
-  readtext(file = "../data/original/lastfm/hip-hop_lyrics.csv", # files to match using *.csv
-           text_field = "lyrics") %>% # text column from the datasets
-  as_tibble() %>%  # convert to a tibble
-  select(-doc_id, -lyrics_url) # keep key variables
-
-
-lastfm <- 
-  readtext(file = "../data/original/lastfm/rock_lyrics.csv", # files to match using *.csv
-           text_field = "lyrics") %>% # text column from the datasets
-  as_tibble() %>%  # convert to a tibble
-  select(-doc_id, -lyrics_url) # keep key variables
-
-
-lastfm <- 
-  readtext(file = "../data/original/lastfm/country_lyrics.csv", # files to match using *.csv
+  readtext(file = "../data/original/lastfm/*.csv", # files to match using *.csv
            text_field = "lyrics") %>% # text column from the datasets
   as_tibble() %>%  # convert to a tibble
   select(-doc_id, -lyrics_url) # keep key variables
@@ -72,19 +50,33 @@ glimpse(lastfm)
 
 ```
 
-```{r}
-lastfm <-
-  read_csv(file = "../data/original/lastfm/pop_lyrics.csv")
-  lastfm %>% # dataset
-  group_by(artist, song, genre, ) %>% # grouping
-     summarise(lyrics = str_flatten(text, collapse = " ")) %>%
+```{r Collapse}
+  
+ lastfm <- 
+  lastfm %>% # # read_csv(file = "../data/original/lastfm/pop_lyrics.csv") # you've already read the data in
+  group_by(artist, song, genre) %>% # grouping
+  summarise(lyrics = str_flatten(text, collapse = " ")) %>%  # collapse text into the new column `lyrics` (dropping `text`)
   ungroup() # unset the groupings
+
 
 
 glimpse(lastfm) # preview
 ```
-```{r}
+```{r Arrange}
+lastfm <- 
+  lastfm %>% # original dataset
+  select(artist, song, lyrics, genre) %>% # order columns (and rename `text` to `lyrics`)
+  arrange(genre, artist) # arrange rows by `genre` and `artist`
 
+lastfm %>% # curated dataset
+  slice_head(n = 5) %>% # first 5 observations
+  knitr::kable(booktabs = TRUE, # print pretty table
+               captions = "Sample lyrics from curated Last.fm dataset.") # add caption to the table
+```
+```{r Write}
+fs::dir_create(path = "../data/derived/lastfm/") # create lastfm subdirectory
+write_csv(lastfm, 
+          file = "../data/derived/lastfm/lastfm_curated.csv") # write lastfm to disk and label as the curated dataset
 ```
 
 JF: you will want to save the results of your curation process in the `../data/derived/` directory.
