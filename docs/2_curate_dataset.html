@@ -535,10 +535,10 @@ div.tocify {
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lastfm)</span></code></pre></div>
 <pre><code>## Rows: 1,682
 ## Columns: 4
-## $ text   &lt;chr&gt; &quot;I hurt myself todayTo see if I still feelI focus on the painThe only thin…
-## $ artist &lt;chr&gt; &quot;Johnny Cash&quot;, &quot;Johnny Cash&quot;, &quot;Johnny Cash&quot;, &quot;Johnny Cash&quot;, &quot;Johnny Cash&quot;,…
-## $ song   &lt;chr&gt; &quot;Hurt&quot;, &quot;Hurt&quot;, &quot;Hurt&quot;, &quot;Hurt&quot;, &quot;Hurt&quot;, &quot;Ring of Fire&quot;, &quot;Ring of Fire&quot;, &quot;R…
-## $ genre  &lt;chr&gt; &quot;country&quot;, &quot;country&quot;, &quot;country&quot;, &quot;country&quot;, &quot;country&quot;, &quot;country&quot;, &quot;country…</code></pre>
+## $ text   [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;I hurt myself todayTo see if I still feelI focus on the painThe only thin…
+## $ artist [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;Johnny Cash&quot;, &quot;Johnny Cash&quot;, &quot;Johnny Cash&quot;, &quot;Johnny Cash&quot;, &quot;Johnny Cash&quot;,…
+## $ song   [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;Hurt&quot;, &quot;Hurt&quot;, &quot;Hurt&quot;, &quot;Hurt&quot;, &quot;Hurt&quot;, &quot;Ring of Fire&quot;, &quot;Ring of Fire&quot;, &quot;R…
+## $ genre  [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;country&quot;, &quot;country&quot;, &quot;country&quot;, &quot;country&quot;, &quot;country&quot;, &quot;country&quot;, &quot;country…</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> lastfm <span class="ot">&lt;-</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  lastfm <span class="sc">%&gt;%</span> <span class="co"># # read_csv(file = &quot;../data/original/lastfm/pop_lyrics.csv&quot;) # you&#39;ve already read the data in</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(artist, song, genre) <span class="sc">%&gt;%</span> <span class="co"># grouping</span></span>
@@ -548,10 +548,10 @@ div.tocify {
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lastfm) <span class="co"># preview</span></span></code></pre></div>
 <pre><code>## Rows: 155
 ## Columns: 4
-## $ artist &lt;chr&gt; &quot;3 Doors Down&quot;, &quot;3 Doors Down&quot;, &quot;50 Cent&quot;, &quot;a-ha&quot;, &quot;ABBA&quot;, &quot;Aerosmith&quot;, &quot;A…
-## $ song   &lt;chr&gt; &quot;Here Without You&quot;, &quot;Kryptonite&quot;, &quot;In Da Club&quot;, &quot;Take On Me&quot;, &quot;Dancing Que…
-## $ genre  &lt;chr&gt; &quot;rock&quot;, &quot;rock&quot;, &quot;hip-hop&quot;, &quot;pop&quot;, &quot;pop&quot;, &quot;rock&quot;, &quot;country&quot;, &quot;country&quot;, &quot;po…
-## $ lyrics &lt;chr&gt; &quot;A hundred days have made me olderSince the last time that I saw your pret…</code></pre>
+## $ artist [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;3 Doors Down&quot;, &quot;3 Doors Down&quot;, &quot;50 Cent&quot;, &quot;a-ha&quot;, &quot;ABBA&quot;, &quot;Aerosmith&quot;, &quot;A…
+## $ song   [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;Here Without You&quot;, &quot;Kryptonite&quot;, &quot;In Da Club&quot;, &quot;Take On Me&quot;, &quot;Dancing Que…
+## $ genre  [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;rock&quot;, &quot;rock&quot;, &quot;hip-hop&quot;, &quot;pop&quot;, &quot;pop&quot;, &quot;rock&quot;, &quot;country&quot;, &quot;country&quot;, &quot;po…
+## $ lyrics [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;A hundred days have made me olderSince the last time that I saw your pret…</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lastfm <span class="ot">&lt;-</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  lastfm <span class="sc">%&gt;%</span> <span class="co"># original dataset</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(artist, song, lyrics, genre) <span class="sc">%&gt;%</span> <span class="co"># order columns (and rename `text` to `lyrics`)</span></span>

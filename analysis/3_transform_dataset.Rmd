@@ -18,15 +18,6 @@ biblio-style: apalike
 ## Setup
 
 ```{r setup}
-# Script-specific options or packages
-library(robotstxt) # web scraping robots
-library(tidyverse) # data manipulation
-library(readtext) # read files
-library(tidytext) # separate text
-library(rvest) 
-library(dplyr)
-
-
 paths_allowed(paths = "https://www.last.fm/") # check permissions
 #> [1] TRUE
 source("../functions/acquire_data_functions.R")
@@ -36,17 +27,27 @@ source("../functions/acquire_data_functions.R")
 
 ```{r Read}
 lastfm <- read_csv(file = "../data/derived/lastfm/lastfm_curated.csv")  # read in lastfm_curated dataset
-```
 
-```{r clean}
 lastfm <- 
   lastfm %>% # dataset
   mutate(lyrics = 
            str_replace_all(string = lyrics, 
                            pattern = "([a-z'!,.)?I])([A-Z])", # find contiguous end/ new line segments
                            replacement = "\\1 \\2")) %>%  # replace with whitespace between
-  mutate(lyrics = str_remove_all(lyrics, "\\(.+?\\)")) # remove backing vocals (Take On Me)
- 
+  mutate(lyrics = str_remove_all(lyrics, "\\(.+?,\\)")) # remove backing vocals (Take On Me)
+lastfm %>% # dataset
+ mutate(lyrics = str_replace_all(string = lyrics, 
+                                    pattern = "'\\ss", 
+                                    replacement = "'s")) # replace ' s with `s
+
+```
+
+
+```{r}
+lastfm %>% # curated dataset
+  slice_head(n = 5) %>% # first 5 observations
+  knitr::kable(booktabs = TRUE, # print pretty table
+               captions = "Sample lyrics from curated Last.fm dataset.") # add caption to the table
 ```
 
 ## Finalize
