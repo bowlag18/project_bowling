@@ -6,30 +6,18 @@ biblio-style: apalike
 ---
 
 ## About
-
+Curating data is important in order to have an organized data set that is ready for analysis. 
 ### Description
 
-<!-- The aim of this script -->
-
-JF: make sure to add prose description to document your processing steps and their results!
+I need to collapse the stanzas into one section so that each song is separate. 
 
 ### Usage
 
-<!-- How to run this script: what input it requires and output produced -->
+I will be using the select, summarise, and arrange feature in order to transform the data. 
 
 ## Setup
 
-JF: note you should only load the packages that are necessary to complete the processing steps for this script!
-
 ```{r setup}
-# Script-specific options or packages
-library(robotstxt) # web scraping robots
-library(tidyverse) # data manipulation
-library(readtext) # read files
-library(tidytext) # separate text
-library(rvest) 
-library(dplyr)
-
 
 paths_allowed(paths = "https://www.last.fm/") # check permissions
 #> [1] TRUE
@@ -86,7 +74,7 @@ JF: you will also want to create the data dictionary for this curated dataset.
 
 ### Log
 
-<!-- Any description that will be helpful to understand the results of this script and how it contributes to the aims of the project -->
+I collapsed the stanzas into lyrics and I also deleted some columns that were unnecessary for my analysis. 
 
 ### Session
 
