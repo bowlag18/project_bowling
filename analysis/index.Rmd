@@ -1,13 +1,11 @@
 ---
-title: "Project Title"
+title: "Linguistic Appropriation of African American Vernacular in Contemporary Music."
 date: "`r Sys.Date()`"
 bibliography: references.bib
 biblio-style: apalike
 ---
 
-## Project title
-
-Linguistic Appropriation of African American Vernacular in Contemporary Music.
+## Linguistic Appropriation of African American Vernacular in Contemporary Music
 
 ### Research area and problem
 
