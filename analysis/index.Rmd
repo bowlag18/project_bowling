@@ -7,21 +7,35 @@ biblio-style: apalike
 
 ## Project title
 
-Linguistic Appropriation of African American Vernacular
+Linguistic Appropriation of African American Vernacular in Contemporary Music.
 
 ### Research area and problem
 
-Cultural appropriation has been a hot topic in recent years. One aspect of this is linguistic appropriation where white communities adopt vernacular that is popular in black communities and use it as their own.
+Cultural appropriation has been a hot topic in recent years. One aspect of this is linguistic appropriation where white communities adopt vernacular that is popular in black communities and use it as their own. This phenomenon has begun to be researched in terms of contemporary music. Linguist Maeve Eberhardt has conducted two studies in the last three years that have shown the prevalence of this appropriation by white singers and explored some of the reasons that artists may do this.
+
+@eberhardt2015
+
+@eberhardt2020
 
 ### Research aim and question
-How does pop culture display this linguistic appropriation? How relevant is this appropriation in the top Billboard songs of the last decade? 
+
+Is this linguistic appropriation the most prevalent in Pop music?
 
 ## Reproduce
 
+1.  Acquire data from Lastfm.com
+2.  Curate and Transform data so that the lyrics are grouped together by song and so that there are only the few variables genre and lyrics.
+3.  Use a text frequency function to search for the presence of words that are common or uncommon in AAVE.
 
 ### Session
 
-<details><summary>View session information</summary>
+<details>
+
+<summary>
+
+View session information
+
+</summary>
 
 ```{r}
 sessioninfo::session_info()

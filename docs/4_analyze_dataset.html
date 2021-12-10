@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2021-12-09" />
+<meta name="date" content="2021-12-10" />
 
 <title>Analyze dataset</title>
 
@@ -156,6 +156,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 
 
@@ -488,52 +510,120 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Analyze dataset</h1>
-<h4 class="date">2021-12-09</h4>
+<h4 class="date">2021-12-10</h4>
 
 </div>
 
 
 <div id="about" class="section level2">
 <h2>About</h2>
+<p>This section of my project has to do with the prevalence of African American Vernacular in each genre. My hypothesis is that Pop will be the most similar genre to Hip-Hop because recent studies show that many Pop singers are appropriating AAVE in their lyrics in order to convey certain themes.</p>
 <div id="description" class="section level3">
 <h3>Description</h3>
-<!-- The aim of this script -->
+<p>The way that I am going to look for this is through copula absence in the lyrics of each genre. The genres with the highest absence will be more representative of AAVE.</p>
 </div>
 <div id="usage" class="section level3">
 <h3>Usage</h3>
-<!-- How to run this script: what input it requires and output produced -->
+<p>I am going to be using the textstat_frequency feature in order to search for “is” and “are” frequencies in each genre.</p>
 </div>
 </div>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Script-specific options or packages</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;../functions/acquire_data_functions.R&quot;</span>) </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>lastfm <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;../data/derived/lastfm/lastfm_curated.csv&quot;</span>)  <span class="co"># read in lastfm_curated dataset </span></span></code></pre></div>
+<pre><code>## Rows: 155 Columns: 3</code></pre>
+<pre><code>## ── Column specification ───────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): song, lyrics, genre</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textmodels)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span></code></pre></div>
 </div>
 <div id="run" class="section level2">
 <h2>Run</h2>
-<!-- Steps involved in analyzing the data -->
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lastfm_corpus <span class="ot">&lt;-</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  lastfm <span class="sc">%&gt;%</span> <span class="co"># data frame</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">&quot;lyrics&quot;</span>) <span class="co"># create corpus</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lastfm_tokens <span class="ot">&lt;-</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  lastfm_corpus <span class="sc">%&gt;%</span> <span class="co"># corpus object</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">what =</span> <span class="st">&quot;word&quot;</span>, <span class="co"># tokenize by word</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="co"># remove punctuation</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="co"># lowercase tokens</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lastfm_dfm <span class="ot">&lt;-</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  lastfm_tokens <span class="sc">%&gt;%</span> <span class="co"># tokens object</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="co"># create dfm</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lastfm_dfm <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">textstat_frequency</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["feature"],"name":[1],"type":["chr"],"align":["left"]},{"label":["frequency"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["rank"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["docfreq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["group"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"you","2":"1803","3":"1","4":"139","5":"all","_rn_":"1"},{"1":"the","2":"1706","3":"2","4":"147","5":"all","_rn_":"2"},{"1":"i","2":"1617","3":"3","4":"146","5":"all","_rn_":"3"},{"1":"a","2":"1043","3":"4","4":"134","5":"all","_rn_":"4"},{"1":"to","2":"903","3":"5","4":"145","5":"all","_rn_":"5"},{"1":"me","2":"766","3":"6","4":"126","5":"all","_rn_":"6"},{"1":"and","2":"753","3":"7","4":"135","5":"all","_rn_":"7"},{"1":"my","2":"739","3":"8","4":"117","5":"all","_rn_":"8"},{"1":"in","2":"571","3":"9","4":"131","5":"all","_rn_":"9"},{"1":"it","2":"525","3":"10","4":"111","5":"all","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lastfm_dfm <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">textstat_frequency</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(feature, frequency), <span class="at">y =</span> frequency)) <span class="sc">+</span> <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Words&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Raw frequency&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Top 50&quot;</span>)</span></code></pre></div>
+<p><img src="4_analyze_dataset_files/figure-html/test-dfm-1.png" width="672" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lastfm_dfm <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_weight</span>(<span class="at">scheme =</span> <span class="st">&quot;prop&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># term-frequency weight</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="at">groups =</span> genre) <span class="sc">%&gt;%</span> <span class="co"># include genre as a group</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(feature <span class="sc">==</span> <span class="st">&quot;is&quot;</span>) <span class="co"># filter only &quot;is&quot;</span></span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["feature"],"name":[1],"type":["chr"],"align":["left"]},{"label":["frequency"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["rank"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["docfreq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["group"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"is","2":"0.2140333","3":"27","4":"19","5":"country","_rn_":"27"},{"1":"is","2":"0.1126096","3":"40","4":"18","5":"hip-hop","_rn_":"2242"},{"1":"is","2":"0.3187755","3":"20","4":"26","5":"pop","_rn_":"4765"},{"1":"is","2":"0.3151020","3":"16","4":"28","5":"rock","_rn_":"6751"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>The table here shows that hip-hop, as expected, has the lowest frequency of the verb “is” which is a form of the verb “to be.” This copula absence is common among speakers of AAVE. Interestingly, country has the next lowest frequency. My hypothesis was that Pop would be the genre that was most similar to Hip-Hop for that grammar feature. However, the frequency in Pop is much higher than Hip-Hop or Country.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lastfm_dfm <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_weight</span>(<span class="at">scheme =</span> <span class="st">&quot;prop&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># term-frequency weight</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="at">groups =</span> genre) <span class="sc">%&gt;%</span> <span class="co"># include genre as a group</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(feature <span class="sc">==</span> <span class="st">&quot;are&quot;</span>) <span class="co"># filter only &quot;is&quot;</span></span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["feature"],"name":[1],"type":["chr"],"align":["left"]},{"label":["frequency"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["rank"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["docfreq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["group"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"are","2":"0.07801786","3":"86","4":"8","5":"country","_rn_":"86"},{"1":"are","2":"0.08386832","3":"49","4":"11","5":"hip-hop","_rn_":"2251"},{"1":"are","2":"0.19750773","3":"36","4":"14","5":"pop","_rn_":"4781"},{"1":"are","2":"0.25483640","3":"28","4":"21","5":"rock","_rn_":"6763"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Again, Hip-Hop has one of the lowest frequencies of this verb form of “to be.”Pop had a much closer frequency to Hip-Hop this time. Shockingly, the frequency is the smallest in Country lyrics.</p>
 </div>
 <div id="finalize" class="section level2">
 <h2>Finalize</h2>
+<p>My data shows that copula absence is present in Hip-Hop lyrics from Last Fm. The words “is” and “are” were not used as frequently in Hip-Hop as other genres, like Rock. However, it was interesting to find that the data also shows that Country is more alike to Hip-Hop in this way than Pop.</p>
 <div id="log" class="section level3">
 <h3>Log</h3>
-<!-- Any description that will be helpful to understand the results of this script and how it contributes to the aims of the project -->
+<p>This evidence does not show a lack of appropriation of AAVE in pop music. It does show, however, the similarities between African American English and White Southern English. At the time that AAVE was developed, the majority of African Americans lived in the South <span class="citation">Gehrmann (n.d.)</span>. This means that the two dialects were very similar and remain similar even today. Other researchers who have looked at individual artists have found the prevalence of Black English to be significant in white Pop artist’s lyrics. <span class="citation">Eberhardt and Vdoviak-Markow (2020)</span> <span class="citation">Eberhardt and Freeman (2015)</span> I think in order to fully look at the prevalence of appropriation in the Pop genre alone, you would need to create a data base that was only white pop stars.</p>
 </div>
 <div id="session" class="section level3">
 <h3>Session</h3>
 <details>
 <summary>
-View session information
+<p>View session information</p>
 </summary>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["package"],"name":[1],"type":["chr"],"align":["left"]},{"label":["ondiskversion"],"name":[2],"type":["chr"],"align":["left"]},{"label":["loadedversion"],"name":[3],"type":["chr"],"align":["left"]},{"label":["path"],"name":[4],"type":["chr"],"align":["left"]},{"label":["loadedpath"],"name":[5],"type":["chr"],"align":["left"]},{"label":["attached"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["is_base"],"name":[7],"type":["lgl"],"align":["right"]},{"label":["date"],"name":[8],"type":["chr"],"align":["left"]},{"label":["source"],"name":[9],"type":["chr"],"align":["left"]},{"label":["md5ok"],"name":[10],"type":["lgl"],"align":["right"]},{"label":["library"],"name":[11],"type":["fct"],"align":["left"]}],"data":[{"1":"citr","2":"0.3.2","3":"0.3.2","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/citr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/citr","6":"TRUE","7":"FALSE","8":"2021-08-20","9":"Github (crsh/citr@0e8243d)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"citr"},{"1":"dplyr","2":"1.0.7","3":"1.0.7","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/dplyr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/dplyr","6":"TRUE","7":"FALSE","8":"2021-06-18","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"dplyr"},{"1":"forcats","2":"0.5.1","3":"0.5.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/forcats","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/forcats","6":"TRUE","7":"FALSE","8":"2021-01-27","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"forcats"},{"1":"ggplot2","2":"3.3.5","3":"3.3.5","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/ggplot2","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/ggplot2","6":"TRUE","7":"FALSE","8":"2021-06-25","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"ggplot2"},{"1":"gitcreds","2":"0.1.1","3":"0.1.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/gitcreds","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/gitcreds","6":"TRUE","7":"FALSE","8":"2020-12-04","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"gitcreds"},{"1":"knitr","2":"1.34","3":"1.34","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/knitr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/knitr","6":"TRUE","7":"FALSE","8":"2021-09-09","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"knitr"},{"1":"magrittr","2":"2.0.1","3":"2.0.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/magrittr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/magrittr","6":"TRUE","7":"FALSE","8":"2020-11-17","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"magrittr"},{"1":"pacman","2":"0.5.1","3":"0.5.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/pacman","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/pacman","6":"TRUE","7":"FALSE","8":"2019-03-11","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"pacman"},{"1":"purrr","2":"0.3.4","3":"0.3.4","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/purrr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/purrr","6":"TRUE","7":"FALSE","8":"2020-04-17","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"purrr"},{"1":"readr","2":"2.0.1","3":"2.0.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/readr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/readr","6":"TRUE","7":"FALSE","8":"2021-08-10","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"readr"},{"1":"readtext","2":"0.81","3":"0.81","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/readtext","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/readtext","6":"TRUE","7":"FALSE","8":"2021-07-14","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"readtext"},{"1":"rmarkdown","2":"2.11","3":"2.11","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/rmarkdown","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/rmarkdown","6":"TRUE","7":"FALSE","8":"2021-09-14","9":"CRAN (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"rmarkdown"},{"1":"robotstxt","2":"0.7.13","3":"0.7.13","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/robotstxt","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/robotstxt","6":"TRUE","7":"FALSE","8":"2020-09-03","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"robotstxt"},{"1":"rvest","2":"1.0.1","3":"1.0.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/rvest","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/rvest","6":"TRUE","7":"FALSE","8":"2021-07-26","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"rvest"},{"1":"sessioninfo","2":"1.1.1","3":"1.1.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/sessioninfo","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/sessioninfo","6":"TRUE","7":"FALSE","8":"2018-11-05","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"sessioninfo"},{"1":"stringr","2":"1.4.0","3":"1.4.0","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/stringr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/stringr","6":"TRUE","7":"FALSE","8":"2019-02-10","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"stringr"},{"1":"tibble","2":"3.1.4","3":"3.1.4","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tibble","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tibble","6":"TRUE","7":"FALSE","8":"2021-08-25","9":"CRAN (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"tibble"},{"1":"tidyr","2":"1.1.3","3":"1.1.3","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidyr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidyr","6":"TRUE","7":"FALSE","8":"2021-03-03","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"tidyr"},{"1":"tidytext","2":"0.3.1","3":"0.3.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidytext","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidytext","6":"TRUE","7":"FALSE","8":"2021-04-10","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"tidytext"},{"1":"tidyverse","2":"1.3.1","3":"1.3.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidyverse","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidyverse","6":"TRUE","7":"FALSE","8":"2021-04-15","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"tidyverse"},{"1":"usethis","2":"2.0.1","3":"2.0.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/usethis","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/usethis","6":"TRUE","7":"FALSE","8":"2021-02-10","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"usethis"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["package"],"name":[1],"type":["chr"],"align":["left"]},{"label":["ondiskversion"],"name":[2],"type":["chr"],"align":["left"]},{"label":["loadedversion"],"name":[3],"type":["chr"],"align":["left"]},{"label":["path"],"name":[4],"type":["chr"],"align":["left"]},{"label":["loadedpath"],"name":[5],"type":["chr"],"align":["left"]},{"label":["attached"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["is_base"],"name":[7],"type":["lgl"],"align":["right"]},{"label":["date"],"name":[8],"type":["chr"],"align":["left"]},{"label":["source"],"name":[9],"type":["chr"],"align":["left"]},{"label":["md5ok"],"name":[10],"type":["lgl"],"align":["right"]},{"label":["library"],"name":[11],"type":["fct"],"align":["left"]}],"data":[{"1":"citr","2":"0.3.2","3":"0.3.2","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/citr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/citr","6":"TRUE","7":"FALSE","8":"2021-08-20","9":"Github (crsh/citr@0e8243d)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"citr"},{"1":"dplyr","2":"1.0.7","3":"1.0.7","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/dplyr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/dplyr","6":"TRUE","7":"FALSE","8":"2021-06-18","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"dplyr"},{"1":"forcats","2":"0.5.1","3":"0.5.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/forcats","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/forcats","6":"TRUE","7":"FALSE","8":"2021-01-27","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"forcats"},{"1":"ggplot2","2":"3.3.5","3":"3.3.5","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/ggplot2","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/ggplot2","6":"TRUE","7":"FALSE","8":"2021-06-25","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"ggplot2"},{"1":"gitcreds","2":"0.1.1","3":"0.1.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/gitcreds","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/gitcreds","6":"TRUE","7":"FALSE","8":"2020-12-04","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"gitcreds"},{"1":"knitr","2":"1.34","3":"1.34","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/knitr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/knitr","6":"TRUE","7":"FALSE","8":"2021-09-09","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"knitr"},{"1":"magrittr","2":"2.0.1","3":"2.0.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/magrittr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/magrittr","6":"TRUE","7":"FALSE","8":"2020-11-17","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"magrittr"},{"1":"NLP","2":"0.2.1","3":"0.2-1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/NLP","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/NLP","6":"TRUE","7":"FALSE","8":"2020-10-14","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"NLP"},{"1":"pacman","2":"0.5.1","3":"0.5.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/pacman","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/pacman","6":"TRUE","7":"FALSE","8":"2019-03-11","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"pacman"},{"1":"purrr","2":"0.3.4","3":"0.3.4","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/purrr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/purrr","6":"TRUE","7":"FALSE","8":"2020-04-17","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"purrr"},{"1":"quanteda","2":"3.1.0","3":"3.1.0","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/quanteda","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/quanteda","6":"TRUE","7":"FALSE","8":"2021-08-17","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"quanteda"},{"1":"quanteda.textmodels","2":"0.9.4","3":"0.9.4","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/quanteda.textmodels","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/quanteda.textmodels","6":"TRUE","7":"FALSE","8":"2021-04-06","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"quanteda.textmodels"},{"1":"quanteda.textstats","2":"0.94.1","3":"0.94.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/quanteda.textstats","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/quanteda.textstats","6":"TRUE","7":"FALSE","8":"2021-05-11","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"quanteda.textstats"},{"1":"readr","2":"2.0.1","3":"2.0.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/readr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/readr","6":"TRUE","7":"FALSE","8":"2021-08-10","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"readr"},{"1":"readtext","2":"0.81","3":"0.81","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/readtext","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/readtext","6":"TRUE","7":"FALSE","8":"2021-07-14","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"readtext"},{"1":"rmarkdown","2":"2.11","3":"2.11","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/rmarkdown","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/rmarkdown","6":"TRUE","7":"FALSE","8":"2021-09-14","9":"CRAN (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"rmarkdown"},{"1":"robotstxt","2":"0.7.13","3":"0.7.13","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/robotstxt","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/robotstxt","6":"TRUE","7":"FALSE","8":"2020-09-03","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"robotstxt"},{"1":"rvest","2":"1.0.1","3":"1.0.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/rvest","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/rvest","6":"TRUE","7":"FALSE","8":"2021-07-26","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"rvest"},{"1":"sessioninfo","2":"1.1.1","3":"1.1.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/sessioninfo","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/sessioninfo","6":"TRUE","7":"FALSE","8":"2018-11-05","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"sessioninfo"},{"1":"stringr","2":"1.4.0","3":"1.4.0","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/stringr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/stringr","6":"TRUE","7":"FALSE","8":"2019-02-10","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"stringr"},{"1":"tibble","2":"3.1.4","3":"3.1.4","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tibble","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tibble","6":"TRUE","7":"FALSE","8":"2021-08-25","9":"CRAN (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"tibble"},{"1":"tidyr","2":"1.1.3","3":"1.1.3","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidyr","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidyr","6":"TRUE","7":"FALSE","8":"2021-03-03","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"tidyr"},{"1":"tidytext","2":"0.3.1","3":"0.3.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidytext","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidytext","6":"TRUE","7":"FALSE","8":"2021-04-10","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"tidytext"},{"1":"tidyverse","2":"1.3.1","3":"1.3.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidyverse","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tidyverse","6":"TRUE","7":"FALSE","8":"2021-04-15","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"tidyverse"},{"1":"tm","2":"0.7.8","3":"0.7-8","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tm","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/tm","6":"TRUE","7":"FALSE","8":"2020-11-18","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"tm"},{"1":"usethis","2":"2.0.1","3":"2.0.1","4":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/usethis","5":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1/usethis","6":"TRUE","7":"FALSE","8":"2021-02-10","9":"RSPM (R 4.1.0)","10":"NA","11":"/cloud/lib/x86_64-pc-linux-gnu-library/4.1","_rn_":"usethis"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </details>
 </div>
 </div>
-<div id="references" class="section level2">
+<div id="references" class="section level2 unnumbered">
 <h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-eberhardt2015" class="csl-entry">
+Eberhardt, Maeve, and Kara Freeman. 2015. <span>“<span>‘</span>First Things First, I’m the Realest<span>’</span>: Linguistic Appropriation, White Privilege, and the Hip-Hop Persona of Iggy Azalea.”</span> <em>Journal of Sociolinguistics</em> 19 (3): 303–27. <a href="https://doi.org/10.1111/josl.12128">https://doi.org/10.1111/josl.12128</a>.
+</div>
+<div id="ref-eberhardt2020" class="csl-entry">
+Eberhardt, Maeve, and Madeline Vdoviak-Markow. 2020. <span>“<span>“</span>I Ain’t Sorry<span>”</span>: African American English as a Strategic Resource in Beyoncé<span>’</span>s Performative Persona.”</span> <em>Language &amp; Communication</em> 72: 68–78. https://doi.org/<a href="https://doi.org/10.1016/j.langcom.2020.03.003">https://doi.org/10.1016/j.langcom.2020.03.003</a>.
+</div>
+<div id="ref-gehrmann" class="csl-entry">
+Gehrmann, Timm. n.d. <em>African American English and White Southern English - Segregational Factors in the Development of a Dialect</em>. <a href="https://www.grin.com/document/68989">https://www.grin.com/document/68989</a>.
+</div>
+</div>
 </div>
 
 

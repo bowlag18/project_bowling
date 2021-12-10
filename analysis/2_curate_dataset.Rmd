@@ -53,8 +53,8 @@ glimpse(lastfm) # preview
 ```{r Arrange}
 lastfm <- 
   lastfm %>% # original dataset
-  select(artist, song, lyrics, genre) %>% # order columns (and rename `text` to `lyrics`)
-  arrange(genre, artist) # arrange rows by `genre` and `artist`
+  select(song, lyrics, genre) %>% # order columns (and rename `text` to `lyrics`)
+  arrange(genre) # arrange rows by `genre` and `artist`
 
 lastfm %>% # curated dataset
   slice_head(n = 5) %>% # first 5 observations

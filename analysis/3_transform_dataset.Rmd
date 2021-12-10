@@ -7,6 +7,8 @@ biblio-style: apalike
 
 ## About
 
+This is the second part of cleaning the data. 
+
 ### Description
 
 In addition to curating the data and the column organization, I need to go even further to clean up the actual lyrics with spacing and punctuation. 
